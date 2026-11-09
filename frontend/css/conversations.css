@@ -1,0 +1,122 @@
+/**
+ * Arquivo: conversations.css
+ * Descrição: Estilo da tela "Todas as conversas"
+ * Projeto: BuscaPet
+ */
+
+/* Container principal da lista de conversas */
+
+.conversations-wrap{
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+/* Título da página */
+
+.conversations-title{
+  margin: 8px 0 16px 0;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+/* Lista de conversas */
+
+.conversations-list{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Card individual da conversa */
+
+.conversation-card{
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.08);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Efeito hover no card */
+
+.conversation-card:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(0,0,0,0.12);
+}
+
+/* Thumbnail do animal */
+
+.conversation-thumb{
+  width: 54px;
+  height: 54px;
+  border-radius: 12px;
+  object-fit: cover;
+  background: #eee;
+  flex: 0 0 auto;
+}
+
+/* Corpo da conversa */
+
+.conversation-body{
+  flex: 1;
+  min-width: 0;
+}
+
+/* Linha superior */
+
+.conversation-top{
+  font-weight: 900;
+  font-size: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Subtexto da conversa */
+
+.conversation-sub{
+  font-size: 13px;
+  color: rgba(0,0,0,0.6);
+  margin-top: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Horário da mensagem */
+
+.conversation-time{
+  font-size: 12px;
+  color: rgba(0,0,0,0.5);
+}
+
+/* Nome do animal */
+.conversation-top strong {
+  font-weight: 900;
+}
+
+/* resto normal */
+.conversation-top {
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+/* usuário (subtexto) */
+.conversation-sub {
+  font-weight: 400;
+}
+
+/* badge alinhada */
+.conversation-top .badge {
+  font-size: 11px;
+  padding: 5px 10px;
+}

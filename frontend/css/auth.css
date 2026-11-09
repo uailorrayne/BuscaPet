@@ -1,0 +1,285 @@
+/*
+  Arquivo: auth.css
+  Descrição: Estilos das telas de autenticação e formulários em card (app/tinder)
+  Projeto: BuscaPet
+*/
+
+/*
+  Container central
+*/
+.auth-wrap {
+  max-width: 420px;
+  margin: 26px auto;
+  padding: 0 14px;
+}
+
+/*
+  Card principal
+*/
+.auth-card {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 18px;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.10);
+  overflow: hidden;
+}
+
+/*
+  Topo (logo / área de upload)
+*/
+.auth-top {
+  padding: 18px 16px 10px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-top img {
+  width: 180px;
+  max-width: 70%;
+  height: auto;
+  object-fit: contain;
+}
+
+/*
+  Corpo
+*/
+.auth-body {
+  padding: 16px;
+}
+
+.auth-body h2 {
+  margin: 0 0 12px 0;
+  text-align: center;
+  font-weight: 800;
+}
+
+/*
+  Form
+*/
+.auth-form {
+  margin-top: 6px;
+}
+
+/*
+  Campo com ícone (input)
+*/
+.field {
+  position: relative;
+  margin: 10px 0;
+}
+
+.field i {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: rgba(0,0,0,0.55);
+  pointer-events: none;
+}
+
+.field input,
+.field textarea,
+.field select {
+  width: 100%;
+  padding: 12px 12px 12px 40px;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.12);
+  outline: none;
+  background: rgba(255,255,255,0.95);
+  box-sizing: border-box;
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 90px;
+  padding-top: 12px;
+}
+
+.field select {
+  appearance: none;
+}
+
+/*
+  Upload (área clicável)
+*/
+.upload-box {
+  width: 100%;
+  padding: 18px 12px;
+  border-radius: 16px;
+  border: 1px dashed rgba(0,0,0,0.18);
+  background: rgba(255,255,255,0.65);
+  text-align: center;
+  cursor: pointer;
+}
+
+.upload-box i {
+  font-size: 42px;
+  display: block;
+  margin: 6px 0 10px 0;
+  color: rgba(0,0,0,0.65);
+}
+
+.upload-box small {
+  display: block;
+  color: #555;
+}
+
+/*
+  Botões
+*/
+.btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px 12px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.btn-primary {
+  background: #ff4d88;
+  color: #fff;
+  box-shadow: 0 10px 22px rgba(255, 77, 136, 0.30);
+}
+
+.btn-secondary {
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.12);
+  color: #222;
+  font-weight: 700;
+}
+
+/*
+  Texto auxiliar
+*/
+.helper {
+  font-size: 13px;
+  color: #555;
+  margin: 10px 0 0 0;
+}
+
+/*
+  Rodapé
+*/
+.auth-footer {
+  padding: 0 16px 16px 16px;
+  text-align: center;
+  color: #444;
+}
+
+.auth-footer a {
+  font-weight: 800;
+  text-decoration: none;
+}
+
+/*
+  Ajuste do mapPicker no cadastro
+*/
+.map-picker {
+  display: none;
+  width: 100%;
+  height: 300px;
+  margin: 12px 0 6px 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.10);
+}
+
+/*
+  PREVIEW DA FOTO NO UPLOAD
+*/
+.upload-preview {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  margin: 4px auto 10px auto;
+  overflow: hidden;
+  background: rgba(0,0,0,0.05);
+  border: 1px solid rgba(0,0,0,0.10);
+}
+
+.upload-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/*
+  LINHA DE LOCALIZAÇÃO (no cadastro do animal)
+*/
+.location-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 8px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(0,0,0,0.10);
+  background: rgba(255,255,255,0.70);
+}
+
+.location-text {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  color: #333;
+  font-size: 14px;
+}
+
+.location-text i {
+  font-size: 16px;
+  color: rgba(0,0,0,0.65);
+}
+
+.btn-location {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  border: 1px solid rgba(0,0,0,0.12);
+  background: #fff;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+.btn-location i {
+  font-size: 16px;
+  color: #222;
+}
+
+/*
+  Compatibilidade: caso você use class="secondary" em botões
+*/
+button.secondary,
+.btn.secondary {
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.12);
+  color: #222;
+  font-weight: 700;
+  width: 100%;
+  padding: 11px 12px;
+  border-radius: 14px;
+  cursor: pointer;
+}
+
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* remove o margin-top que está empurrando */
+.auth-wrap {
+  max-width: 420px;
+  width: 100%;
+  padding: 0 14px;
+}

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Animal | BuscaPet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+  <header class="app-header">
+    <button class="header-icon" type="button" aria-label="Voltar" onclick="history.back()">
+      <i class="fa-solid fa-arrow-left"></i>
+    </button>
+
+    <div class="header-spacer"></div>
+
+    <button class="header-icon" type="button" aria-label="Home" onclick="window.location.href='home.html'">
+      <i class="fa-solid fa-house"></i>
+    </button>
+  </header>
+
+  <div class="animal-container">
+
+    <div class="animal-carousel" id="animalCarousel" aria-label="Fotos do animal">
+      <div class="animal-carousel-track" id="animalCarouselTrack"></div>
+
+      <button class="animal-carousel-nav prev" id="carouselPrev" type="button" aria-label="Foto anterior">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <button class="animal-carousel-nav next" id="carouselNext" type="button" aria-label="Próxima foto">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+
+      <div class="animal-carousel-dots" id="animalCarouselDots" aria-hidden="true"></div>
+
+      <!-- BOTÃO EDITAR (só aparece se for dono) -->
+      <button
+        id="btnEditAnimal"
+        class="floating-edit-btn"
+        type="button"
+        aria-label="Editar animal"
+        title="Editar"
+        style="display:none;"
+      >
+        <i class="fa-solid fa-pen"></i>
+      </button>
+    </div>
+
+    <div class="animal-info">
+      <h1 id="animalTitle">
+        <span id="animalName"></span>
+      </h1>
+
+      <div id="animalStatusBadge"></div>
+
+      <p><strong>Espécie:</strong> <span id="animalSpecies"></span></p>
+      <p><strong>Cor:</strong> <span id="animalColor"></span></p>
+
+      <!-- Distância -->
+      <p><strong>Distância:</strong> <span id="animalDistance">Carregando...</span></p>
+
+      <p><strong>Endereço aproximado:</strong> <span id="animalAddress">Carregando...</span></p>
+
+      <p id="animalDescription" class="description"></p>
+
+      <!-- Botão contato (só aparece se NÃO for o dono) -->
+      <button
+        id="btnContactOwner"
+        type="button"
+        class="primary-btn"
+        style="margin-top:12px; width:100%;"
+      >
+        Entrar em contato
+      </button>
+
+      <button 
+        id="resolveBtn" 
+        class="primary-btn" 
+        onclick="markAsResolved()" 
+        style="display:none;"
+      >
+        Marcar como resolvido
+      </button>
+
+    </div>
+
+    <div id="animalMap" class="animal-map" aria-label="Mapa do animal"></div>
+  </div>
+
+  <!-- MODAL EDITAR ANIMAL -->
+  <section id="editAnimalModal" class="modal" hidden>
+    <div class="modal-panel" role="dialog" aria-label="Editar animal">
+      <div class="modal-head">
+        <h3>Editar animal</h3>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-field">
+          <label for="editAnimalName">Nome</label>
+          <input id="editAnimalName" type="text" />
+        </div>
+
+        <div class="modal-field">
+          <label for="editAnimalSpecies">Espécie</label>
+          <input id="editAnimalSpecies" type="text" />
+        </div>
+
+        <div class="modal-field">
+          <label for="editAnimalColor">Cor</label>
+          <input id="editAnimalColor" type="text" />
+        </div>
+
+        <div class="modal-field">
+          <label for="editAnimalDescription">Descrição</label>
+          <textarea id="editAnimalDescription" rows="4"></textarea>
+        </div>
+
+        <div class="modal-field">
+          <label>Fotos atuais</label>
+          <div id="editAnimalCurrentPhotos" class="photo-grid"></div>
+          <small class="muted" id="editAnimalPhotoRule">
+            Você pode remover fotos, mas precisa manter no mínimo 1.
+          </small>
+        </div>
+
+        <div class="modal-field">
+          <label>Adicionar fotos (opcional, máx 6)</label>
+
+          <!-- Dropzone (igual ao cadastro) -->
+          <label class="upload-box" for="editAnimalPhotos">
+            <input id="editAnimalPhotos" class="upload-input" type="file" accept="image/*" multiple />
+            <div class="upload-inner">
+              <div class="upload-icon"><i class="fa-solid fa-camera"></i></div>
+              <div class="upload-text" id="editAnimalUploadText">Clique para fazer upload (1 a 6 fotos)</div>
+            </div>
+          </label>
+
+          <div id="editAnimalNewPreview" class="photo-grid" style="margin-top:10px;"></div>
+        </div>
+
+        <button id="btnDeleteAnimal" class="danger-btn" type="button">
+          Excluir este animal
+        </button>
+
+        <p id="animalEditMsg" class="modal-msg"></p>
+      </div>
+
+      <div class="modal-actions">
+        <button id="btnCancelAnimalEdit" class="modal-btn cancel" type="button">Cancelar</button>
+        <button id="btnSaveAnimalEdit" class="modal-btn save" type="button">Salvar</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ordem importa -->
+  <script src="../js/config.js"></script>
+  <script src="../js/animal.js"></script>
+
+  <!-- Google Maps -->
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=SUA_CHAVE_GOOGLE_MAPS&v=weekly&libraries=marker&loading=async&callback=initMap"
+    async
+    defer>
+  </script>
+
+</body>
+</html>

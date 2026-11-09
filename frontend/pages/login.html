@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!--
+    Arquivo: login.html
+    Descrição: Página de login do usuário (layout estilo app/tinder)
+    Projeto: BuscaPet
+  -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login | BuscaPet</title>
+
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/auth.css">
+</head>
+
+<body class="auth-page">
+
+  <!--
+    Card de login
+  -->
+  <div class="auth-wrap">
+    <div class="auth-card">
+
+      <!-- Logo -->
+      <div class="auth-top">
+        <img src="../assets/images/logoapp.png" alt="Logo BuscaPet">
+      </div>
+
+      <div class="auth-body">
+        <h2>Entrar</h2>
+
+        <!-- Formulário -->
+        <form class="auth-form" onsubmit="event.preventDefault(); login();">
+
+          <div class="field">
+            <i class="fa-solid fa-envelope"></i>
+            <input
+              type="email"
+              id="email"
+              placeholder="E-mail"
+              required
+            >
+          </div>
+
+          <div class="field">
+            <i class="fa-solid fa-lock"></i>
+            <input
+              type="password"
+              id="password"
+              placeholder="Senha"
+              required
+            >
+          </div>
+
+          <button type="submit" class="btn btn-primary">Entrar</button>
+        </form>
+      </div>
+
+      <div class="auth-footer">
+        Não tem uma conta?
+        <a href="register.html">Criar conta</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script src="../js/auth.js"></script>
+
+</body>
+</html>

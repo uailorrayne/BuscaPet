@@ -1,0 +1,127 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: url('../assets/images/fundo.png') no-repeat center center fixed;
+  background-size: cover;
+}
+
+.global-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: red;
+  color: #fff;
+  font-size: 11px;
+  padding: 3px 6px;
+  border-radius: 999px;
+  min-width: 18px;
+  text-align: center;
+}
+
+.fab-conversations {
+  position: fixed;
+  bottom: 120px;
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #5c3bbf;
+  color: #fff;
+  border: none;
+  font-size: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  cursor: pointer;
+  z-index: 60;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.fab-conversations:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 36px rgba(0,0,0,0.32);
+}
+
+/* ================= BADGES PADRÃO (HOME / PROFILE / DETAIL) ================= */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 6px 12px;
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+
+  white-space: nowrap;
+}
+
+/* PERDIDO = ROSA (igual home) */
+.badge.perdido {
+  background: rgba(255, 77, 136, 0.15);
+  color: #ff4d88;
+}
+
+/* ENCONTRADO = AZUL */
+.badge.encontrado {
+  background: rgba(74, 163, 255, 0.15);
+  color: #4aa3ff;
+}
+
+/* RESOLVIDO = VERDE */
+.badge.resolvido {
+  background: rgba(46, 204, 113, 0.15);
+  color: #2ecc71;
+}
+
+/* ================= CARD PADRÃO DE ANIMAL ================= */
+
+.animal-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 12px;
+  border-radius: 16px;
+
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.06);
+  backdrop-filter: blur(6px);
+
+  box-shadow: 0 10px 22px rgba(0,0,0,0.08);
+
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.animal-card:hover {
+  transform: scale(1.02);
+}
+
+.animal-photo {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.animal-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.animal-info strong {
+  font-size: 16px;
+}
+
+.animal-info span {
+  font-size: 13px;
+  color: #555;
+}

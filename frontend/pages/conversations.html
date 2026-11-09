@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Conversas | BuscaPet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/conversations.css" />
+</head>
+
+<body>
+
+  <!-- Header padrão -->
+  <header class="app-header">
+    <button class="header-icon" type="button" aria-label="Voltar" onclick="history.back()">
+      <i class="fa-solid fa-arrow-left"></i>
+    </button>
+
+    <div class="header-spacer"></div>
+
+    <button class="header-icon" type="button" aria-label="Home" onclick="window.location.href='home.html'">
+      <i class="fa-solid fa-house"></i>
+    </button>
+  </header>
+
+  <main class="conversations-wrap">
+    <h1 class="conversations-title">Minhas conversas</h1>
+
+    <div id="conversationsList" class="conversations-list">
+      <p class="muted">Carregando...</p>
+    </div>
+  </main>
+
+  <script src="../js/config.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="../js/conversations.js"></script>
+</body>
+</html>

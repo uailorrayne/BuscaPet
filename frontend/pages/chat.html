@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Chat | BuscaPet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Ícones -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/chat.css" />
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+</head>
+
+<body>
+  <div class="chat-wrap">
+
+    <!-- Header padrão -->
+    <header class="app-header">
+      <button class="header-icon" type="button" aria-label="Voltar" onclick="history.back()">
+        <i class="fa-solid fa-arrow-left"></i>
+      </button>
+
+      <div class="header-spacer"></div>
+
+      <!-- Botão de todas as conversas -->
+      <button class="header-icon" type="button" aria-label="Conversas" title="Conversas" onclick="window.location.href='conversations.html'">
+        <i class="fa-solid fa-comments"></i>
+      </button>
+    </header>
+
+    <!-- Info do animal (abaixo do banner) -->
+    <section class="chat-animal-card" aria-label="Informações do chat">
+      <img id="chatAnimalPhoto" class="chat-animal-thumb" alt="Foto do animal" />
+      <div class="chat-animal-meta">
+        <div id="chatAnimalName" class="chat-animal-title">Carregando...</div>
+        <div id="chatWithUser" class="chat-animal-sub">Carregando...</div>
+      </div>
+    </section>
+
+    <div id="chatBody" class="chat-body"></div>
+
+    <!-- indicador de digitação -->
+
+    <div id="typingIndicator" class="typing-indicator" style="display:none">
+      digitando...
+    </div>
+
+    <div id="imagePreviewContainer" class="chat-preview" hidden>
+      <img id="imagePreview" />
+      <button id="removePreview">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+
+    <div class="chat-input">
+
+      <!-- overlay -->
+      <div id="recordingOverlay" class="recording-overlay">
+        <div id="recordingCancel" class="recording-left">
+          <i class="fa-solid fa-trash"></i>
+          <span>Arraste para cancelar</span>
+        </div>
+
+        <div class="recording-center">
+          <span id="recordingTimerText"></span>
+        </div>
+      </div>
+
+      <!-- cadeado -->
+      <div id="recordingLock" class="recording-lock">
+        <i class="fa-solid fa-lock"></i>
+      </div>
+
+      <!-- botões -->
+      <button id="btnUpload" type="button" class="icon-only">
+        <i class="fa-solid fa-plus"></i>
+      </button>
+
+      <input id="chatText" type="text" placeholder="Digite uma mensagem..." />
+
+      <button id="btnRecord" type="button" class="icon-only">
+        <i class="fa-solid fa-microphone"></i>
+      </button>
+
+      <button id="btnSend" type="button">
+        <i class="fa-solid fa-paper-plane"></i>
+      </button>
+
+      
+
+    </div>
+
+    <!-- MENU DE ANEXOS -->
+    <div id="attachmentMenu" class="attachment-menu" hidden>
+
+      <button id="btnSendImage" type="button">
+        <i class="fa-solid fa-image"></i>
+        Foto
+      </button>
+
+      <button id="btnSendCamera" type="button">
+        <i class="fa-solid fa-camera"></i>
+        Câmera
+      </button>
+
+      <button id="btnSendLocation" type="button">
+        <i class="fa-solid fa-location-dot"></i>
+        Localização
+      </button>
+
+    </div>
+
+
+    <input id="chatFileInput" type="file" accept="image/*" />    
+
+      <!-- MODAL DE IMAGEM -->
+      <div id="imageModal" class="image-modal">
+        <span id="closeImageModal">&times;</span>
+        <img id="modalImage" />
+      </div>
+
+      <div id="locationSheet" class="location-sheet" hidden>
+
+        <div class="location-header">
+          Escolher localização
+        </div>
+
+        <!-- mapa onde o usuário escolhe localização -->
+        <div id="mapPreview"></div>
+
+        <!-- botão para centralizar na localização atual -->
+        <button id="btnCenterLocation" class="btn-center">
+          <i class="fa-solid fa-location-crosshairs"></i>
+        </button>
+
+        <div class="location-sheet-actions">
+
+          <button id="cancelLocation" class="location-btn cancel">
+            Cancelar
+          </button>
+
+          <button id="confirmLocation" class="location-btn send">
+            Enviar localização
+          </button>
+
+        </div>
+
+      </div>
+      
+  <script src="../js/config.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=SUA_CHAVE_GOOGLE_MAPS&v=weekly&libraries=places,marker"></script>
+  <script src="../js/chat.js"></script>
+
+</body>
+</html>

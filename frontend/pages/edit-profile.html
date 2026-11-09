@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Editar Perfil | BuscaPet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+
+<body onload="checkAuth();">
+  <header class="app-header">
+    <button class="header-icon" type="button" aria-label="Voltar" onclick="history.back()">
+      <i class="fa-solid fa-arrow-left"></i>
+    </button>
+
+    <div class="header-spacer" aria-hidden="true"></div>
+
+    <button class="header-icon" type="button" aria-label="Home" onclick="window.location.href='home.html'">
+      <i class="fa-solid fa-house"></i>
+    </button>
+  </header>
+
+  <main style="max-width:420px; margin:18px auto 40px auto; padding:0 12px;">
+    <section style="background:#fff; border-radius:18px; padding:16px; box-shadow:0 10px 24px rgba(0,0,0,0.10); border:1px solid rgba(0,0,0,0.06);">
+      <h1 style="margin:0 0 12px 0; text-align:left;">Editar perfil</h1>
+
+      <label style="display:grid; gap:6px; margin-bottom:10px;">
+        <span>Nome</span>
+        <input id="editName" type="text" style="padding:12px; border-radius:14px; border:1px solid rgba(0,0,0,0.12);" />
+      </label>
+
+      <label style="display:grid; gap:6px; margin-bottom:10px;">
+        <span>Username</span>
+        <input id="editUsername" type="text" style="padding:12px; border-radius:14px; border:1px solid rgba(0,0,0,0.12);" />
+      </label>
+
+      <label style="display:grid; gap:6px; margin-bottom:10px;">
+        <span>Email</span>
+        <input id="editEmail" type="email" style="padding:12px; border-radius:14px; border:1px solid rgba(0,0,0,0.12);" />
+      </label>
+
+      <label style="display:grid; gap:6px; margin-bottom:10px;">
+        <span>Foto de perfil</span>
+        <input id="editAvatar" type="file" accept="image/*" />
+      </label>
+
+      <button id="btnSave" type="button"
+        style="width:100%; border:none; border-radius:16px; padding:12px 14px; font-weight:900; cursor:pointer; background:#ff4d88; color:#fff; box-shadow:0 12px 24px rgba(255, 77, 136, 0.30);">
+        Salvar
+      </button>
+
+      <p id="msg" style="margin:10px 0 0 0; color:#666; font-size:13px;"></p>
+    </section>
+  </main>
+
+  <script src="../js/auth.js"></script>
+  <script src="../js/edit-profile.js"></script>
+</body>
+</html>

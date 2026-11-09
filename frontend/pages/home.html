@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Home | BuscaPet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/home.css" />
+</head>
+
+<body class="home-page">
+
+  <header class="app-header">
+    <button class="header-icon" id="btnSearch" type="button" aria-label="Pesquisar">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
+
+    <div class="header-spacer" aria-hidden="true"></div>
+
+    <button class="header-icon" type="button" aria-label="Perfil" onclick="window.location.href='profile.html'">
+      <i class="fa-solid fa-circle-user"></i>
+    </button>
+  </header>
+
+  <!-- MAPA -->
+  <section class="home-map">
+    <div id="map"></div>
+  </section>
+
+  <!-- BALÃO: endereço + ações -->
+  <div class="map-search-bar">
+    <i class="fa-solid fa-location-dot"></i>
+
+    <input
+      id="mapSearch"
+      type="text"
+      placeholder="Digite um endereço para centralizar o mapa..."
+      autocomplete="off"
+    />
+
+    <button
+      type="button"
+      class="map-action-btn"
+      id="btnMapSearch"
+      aria-label="Centralizar no endereço"
+      title="Centralizar"
+    >
+      <i class="fa-solid fa-arrow-right-to-bracket"></i>
+    </button>
+
+    <button
+      type="button"
+      class="map-action-btn"
+      id="btnGpsLocation"
+      aria-label="Editar minha localização"
+      title="Editar localização"
+    >
+      <i class="fa-solid fa-location-crosshairs"></i>
+    </button>
+
+    <small class="map-search-hint" id="mapSearchHint">
+      Dica: aperte Enter ou use o botão para centralizar.
+    </small>
+  </div>
+
+  <!-- OVERLAY (abre só pela lupa) -->
+  <section class="search-overlay" id="searchOverlay" hidden>
+    <div class="search-card" role="dialog" aria-label="Busca de animais">
+      <div class="search-field">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input
+          type="text"
+          id="globalSearch"
+          class="search-input"
+          placeholder="Buscar por nome, espécie ou cor..."
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="search-actions">
+        <button type="button" class="search-confirm" id="btnConfirmSearch">
+          Buscar
+        </button>
+
+        <button type="button" class="search-close" id="btnCloseSearch">
+          Fechar
+        </button>
+      </div>
+
+      <small class="search-hint">Dica: aperte Enter para buscar e centralizar no primeiro resultado.</small>
+    </div>
+  </section>
+
+  <!-- BOTTOM SHEET -->
+  <section class="sheet" id="sheet">
+    <div class="sheet-backdrop" id="sheetBackdrop"></div>
+
+    <div class="sheet-panel" role="dialog" aria-label="Lista de animais">
+      <div class="sheet-handle" aria-hidden="true"></div>
+
+      <div class="sheet-header">
+        <div class="sheet-tabs">
+          <button class="sheet-tab active" id="tabLost" type="button">Animais Perdidos</button>
+          <button class="sheet-tab" id="tabMine" type="button">Meus Animais</button>
+          <button class="sheet-tab" id="tabResolved" type="button">Concluídos</button>
+        </div>
+      </div>
+
+      <div class="sheet-content">
+        <div id="animals-list"></div>
+      </div>
+
+      <div class="sheet-footer">
+        <button class="sheet-cta" type="button" onclick="window.location.href='add-animal.html'">
+          <i class="fa-solid fa-location-dot"></i>
+          Cadastrar animal
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCRIPTS (ordem importa) -->
+  <script src="../js/config.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/animals.js"></script>
+  <script src="../js/map.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof window.checkAuth === 'function') window.checkAuth();
+
+      const sheet = document.getElementById('sheet');
+      const backdrop = document.getElementById('sheetBackdrop');
+
+      const tabLost = document.getElementById('tabLost');
+      const tabMine = document.getElementById('tabMine');
+      const tabResolved = document.getElementById('tabResolved');
+
+      const btnSearch = document.getElementById('btnSearch');
+      const searchOverlay = document.getElementById('searchOverlay');
+      const btnCloseSearch = document.getElementById('btnCloseSearch');
+      const btnConfirmSearch = document.getElementById('btnConfirmSearch');
+      const globalSearch = document.getElementById('globalSearch');
+
+      function openSheet() {
+        if (!sheet) return;
+        sheet.classList.add('active');
+      }
+
+      function closeSheet() {
+        if (!sheet) return;
+        sheet.classList.remove('active');
+      }
+
+      function currentQuery() {
+        return (globalSearch?.value || '').trim();
+      }
+
+      function restoreListAndMarkers() {
+        if (typeof window.filterHomeListByQuery === 'function') {
+          window.filterHomeListByQuery('');
+        } else if (typeof window.getAnimalsCache === 'function' && typeof window.renderAnimalsList === 'function') {
+          window.renderAnimalsList(window.getAnimalsCache());
+        }
+
+        if (typeof window.filterMapMarkersByQuery === 'function') {
+          window.filterMapMarkersByQuery('');
+        }
+      }
+
+      function openSearch() {
+        if (!searchOverlay) return;
+        searchOverlay.removeAttribute('hidden');
+        globalSearch?.focus();
+      }
+
+      function closeSearch() {
+        if (!searchOverlay) return;
+        searchOverlay.setAttribute('hidden', '');
+        if (globalSearch) globalSearch.value = '';
+        restoreListAndMarkers();
+      }
+
+      function toggleSearch() {
+        if (!searchOverlay) return;
+        const isHidden = searchOverlay.hasAttribute('hidden');
+        if (isHidden) openSearch();
+        else closeSearch();
+      }
+
+      function applyFilterNow(q) {
+        const query = (q || '').trim();
+
+        if (!query) {
+          restoreListAndMarkers();
+          return;
+        }
+
+        if (typeof window.filterHomeListByQuery === 'function') {
+          window.filterHomeListByQuery(query);
+        } else if (typeof window.getFilteredAnimalsForQuery === 'function' && typeof window.renderAnimalsList === 'function') {
+          const filtered = window.getFilteredAnimalsForQuery(query);
+          window.renderAnimalsList(filtered);
+        }
+
+        if (typeof window.filterMapMarkersByQuery === 'function') {
+          window.filterMapMarkersByQuery(query);
+        }
+      }
+
+      function confirmSearch() {
+        const q = currentQuery();
+        applyFilterNow(q);
+
+        if (
+          q &&
+          typeof window.getFilteredAnimalsForQuery === 'function' &&
+          typeof window.centerMapToAnimal === 'function'
+        ) {
+          const arr = window.getFilteredAnimalsForQuery(q);
+          if (arr && arr.length > 0) {
+            const first = arr[0];
+            const lat = Number(first.latitude);
+            const lng = Number(first.longitude);
+            if (!Number.isNaN(lat) && !Number.isNaN(lng)) {
+              window.centerMapToAnimal(lat, lng, 16, -120);
+            }
+          }
+        }
+      }
+
+      async function reloadTabAndReapplyFilter(which) {
+        const q = currentQuery();
+
+        if (which === 'lost') {
+          if (typeof window.loadAnimals === 'function') await window.loadAnimals();
+        } else {
+          if (typeof window.loadMyAnimals === 'function') await window.loadMyAnimals();
+        }
+
+        if (q) applyFilterNow(q);
+      }
+
+      if (tabLost) {
+        tabLost.addEventListener('click', async (e) => {
+          e.preventDefault();
+          tabLost.classList.add('active');
+          tabMine?.classList.remove('active');
+          tabResolved?.classList.remove('active');
+          openSheet();
+          await reloadTabAndReapplyFilter('lost');
+        });
+      }
+
+      if (tabMine) {
+        tabMine.addEventListener('click', async (e) => {
+          e.preventDefault();
+          tabMine.classList.add('active');
+          tabLost?.classList.remove('active');
+          tabResolved?.classList.remove('active');
+          openSheet();
+          await reloadTabAndReapplyFilter('mine');
+        });
+      }
+
+      if (tabResolved) {
+        tabResolved.addEventListener('click', async (e) => {
+          e.preventDefault();
+
+          tabResolved.classList.add('active');
+          tabLost?.classList.remove('active');
+          tabMine?.classList.remove('active');
+
+          openSheet();
+
+          if (typeof window.loadResolvedAnimals === 'function') {
+            await window.loadResolvedAnimals();
+          }
+        });
+      }
+
+      if (backdrop) backdrop.addEventListener('click', closeSheet);
+
+      if (btnSearch) btnSearch.addEventListener('click', toggleSearch);
+      if (btnCloseSearch) btnCloseSearch.addEventListener('click', closeSearch);
+      if (btnConfirmSearch) btnConfirmSearch.addEventListener('click', confirmSearch);
+
+      if (globalSearch) {
+        globalSearch.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            confirmSearch();
+          }
+        });
+
+        globalSearch.addEventListener('input', () => {
+          applyFilterNow(globalSearch.value || '');
+        });
+      }
+
+      if (searchOverlay) {
+        searchOverlay.addEventListener('click', (e) => {
+          if (e.target === searchOverlay) closeSearch();
+        });
+      }
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && searchOverlay && !searchOverlay.hasAttribute('hidden')) {
+          closeSearch();
+        }
+      });
+
+      // carregar lista aqui
+      if (typeof window.loadAnimals === 'function') window.loadAnimals();
+    });
+
+    // backup: se por algum motivo o DOMContentLoaded não rodar completo, garante a lista.
+    window.addEventListener('load', () => {
+      const wrap = document.getElementById('animals-list');
+      const isEmpty = wrap && !wrap.children.length && !(wrap.textContent || '').trim();
+      if (isEmpty && typeof window.loadAnimals === 'function') {
+        window.loadAnimals();
+      }
+    });
+  </script>
+
+  <!-- Google Maps (recomendado: async + defer) -->
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=SUA_CHAVE_GOOGLE_MAPS&v=weekly&libraries=places,marker&loading=async&callback=initHomeMap"
+    async
+    defer>
+  </script>
+
+  <!-- BOTÃO FLUTUANTE DE CONVERSAS -->
+  <button
+    class="fab-conversations"
+    type="button"
+    aria-label="Conversas"
+    title="Conversas"
+    onclick="window.location.href='conversations.html'"
+  >
+    <i class="fa-solid fa-comments"></i>
+    <span id="chatGlobalBadge" class="global-badge" hidden>0</span>
+  </button>
+
+</body>
+</html>
+

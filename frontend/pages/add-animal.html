@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cadastrar Animal | BuscaPet</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/auth.css">
+</head>
+
+<body class="app-page" onload="checkAuth()">
+
+  <header class="app-header">
+    <button class="header-icon" type="button" aria-label="Voltar" onclick="history.back()">
+      <i class="fa-solid fa-arrow-left"></i>
+    </button>
+
+    <div class="header-spacer"></div>
+
+    <button class="header-icon" type="button" aria-label="Perfil" onclick="window.location.href='profile.html'">
+      <i class="fa-solid fa-circle-user"></i>
+    </button>
+  </header>
+
+  <div class="auth-wrap">
+    <div class="auth-card">
+
+      <div class="auth-top">
+        <label for="photo" class="upload-box" aria-label="Enviar foto do animal">
+          <div class="upload-preview" id="photoPreview">
+            <i class="fa-solid fa-camera"></i>
+          </div>
+          <small id="photoHint">Clique para fazer upload (1 a 6 fotos)</small>
+        </label>
+      </div>
+
+      <div class="auth-body">
+        <h2>Cadastrar Animal</h2>
+
+        <form class="auth-form" onsubmit="event.preventDefault(); addAnimal();">
+          <div class="field">
+            <i class="fa-solid fa-paw"></i>
+            <input type="text" id="name" placeholder="Nome do animal" required>
+          </div>
+
+          <div class="field">
+            <i class="fa-solid fa-dog"></i>
+            <select id="species" required>
+              <option value="" selected disabled>Selecione a espécie</option>
+              <option value="Cachorro">Cachorro</option>
+              <option value="Gato">Gato</option>
+              <option value="Outro">Outro</option>
+            </select>
+          </div>
+
+          <div class="field field-status">
+            <i class="fa-solid fa-circle-question"></i>
+
+            <div class="status-selector">
+              <label class="status-option">
+                <input type="radio" name="status_type" value="perdido" required>
+                <span>Perdido</span>
+              </label>
+
+              <label class="status-option">
+                <input type="radio" name="status_type" value="encontrado" required>
+                <span>Encontrado</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="field">
+            <i class="fa-solid fa-palette"></i>
+            <input type="text" id="color" placeholder="Cor" required>
+          </div>
+
+          <div class="field">
+            <i class="fa-solid fa-align-left"></i>
+            <textarea id="description" placeholder="Descrição" required></textarea>
+          </div>
+
+          <input
+            type="file"
+            id="photo"
+            accept="image/*"
+            multiple
+            required
+            style="display:none;"
+          >
+
+          <div class="location-row">
+            <div class="location-text" id="locationInfo">
+              <i class="fa-solid fa-location-dot"></i>
+              <span id="locationLabel">Localização: carregando...</span>
+            </div>
+
+            <button
+              type="button"
+              class="btn-location"
+              id="btnPickLocation"
+              onclick="toggleMapPicker()"
+              aria-label="Escolher local no mapa"
+              title="Escolher local no mapa"
+            >
+              <i class="fa-solid fa-location-crosshairs"></i>
+            </button>
+          </div>
+
+          <p class="helper" id="locationHint">Se não escolher, será usada sua localização atual</p>
+
+          <div class="location-search" id="locationSearchWrap" hidden>
+            <div class="field">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input
+                type="text"
+                id="locationSearch"
+                placeholder="Digite um endereço para localizar no mapa"
+                autocomplete="off"
+              >
+            </div>
+
+            <button
+              type="button"
+              class="btn secondary"
+              id="btnSearchAddress"
+              onclick="geocodeMapPickerInput(document.getElementById('locationSearch')?.value || '')"
+            >
+              Buscar endereço
+            </button>
+          </div>
+
+          <div id="mapPicker" class="map-picker" style="display:none;"></div>
+
+          <button type="submit" class="btn btn-primary">Cadastrar</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/add-animal.js"></script>
+
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=SUA_CHAVE_GOOGLE_MAPS&v=weekly&libraries=places,marker&loading=async&callback=initAddAnimalMap"
+    async 
+    defer>
+  </script>
+
+</body>
+</html>
